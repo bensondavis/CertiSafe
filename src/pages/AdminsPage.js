@@ -23,13 +23,59 @@ export default function AdminsPage() {
       });
   };
 
+  const removeElementFromIdArray = (index) => {
+    const arr = [...ids];
+    arr.splice(index, 1);
+    setIds(arr);
+  };
+
+  const handleAccept = (id, index) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(ADDRESS, ABI, provider);
+    const signer = provider.getSigner();
+    const daiWithSigner = contract.connect(signer);
+    daiWithSigner
+      .accept(id)
+      .then((res) => {
+        console.log(res);
+        removeElementFromIdArray(index);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleReject = (id, index) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(ADDRESS, ABI, provider);
+    const signer = provider.getSigner();
+    const daiWithSigner = contract.connect(signer);
+    daiWithSigner
+      .reject(id)
+      .then((res) => {
+        console.log(res);
+        removeElementFromIdArray(index);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getNonValidatedIds();
   }, []);
 
   return (
     <>
-      <Box sx={{ width: "70vw", mx: "auto", mt: "8vh", p: "50px 0" }}>
+      <Box
+        sx={{
+          width: "70vw",
+          mx: "auto",
+          mt: "8vh",
+          p: "50px 0",
+          minWidth: "400px",
+        }}
+      >
         <Stack
           sx={{
             width: "100%",
@@ -46,8 +92,14 @@ export default function AdminsPage() {
         </Stack>
         {ids
           ? ids.map((data, key) => (
-              // <Typography key={key}>{parseInt(data._hex)}</Typography>
-              <ListDocuments id={parseInt(data._hex)} />
+              <div key={key}>
+                <ListDocuments
+                  id={parseInt(data._hex)}
+                  index={key}
+                  onAccept={handleAccept}
+                  onReject={handleReject}
+                />
+              </div>
             ))
           : null}
       </Box>

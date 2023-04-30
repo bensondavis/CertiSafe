@@ -57,6 +57,7 @@ export default function PublisherPage() {
     setActiveStep(0);
     setFile(null);
     setHash("");
+    setProgess(0);
     setName("");
     setDetails("");
     setIssue("");
@@ -86,12 +87,13 @@ export default function PublisherPage() {
         justifyContent={"center"}
         sx={{
           maxWidth: "80vw",
+          width: "612px",
           mx: "auto",
           mt: "8vh",
           mb: "8vh",
           backgroundColor: "#FEFEFE",
           p: "5px",
-          maxHeight: "90vh",
+          // maxHeight: "90vh",
           borderRadius: "10px",
         }}
       >
