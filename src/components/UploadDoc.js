@@ -16,6 +16,7 @@ const UploadDoc = ({
   setFile,
   hash,
   progress,
+  setTxnHash,
 }) => {
   const [message, setMessage] = useState("");
 
@@ -28,6 +29,7 @@ const UploadDoc = ({
       .addCertificate(id, hash, name, details, issuedOn, url)
       .then((res) => {
         setMessage(res.hash);
+        setTxnHash(res.hash);
       })
       .catch((err) => {
         setMessage(err.reason);

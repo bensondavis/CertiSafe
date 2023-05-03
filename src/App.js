@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      <Appbar setWalletAddress={setWalletAddress} />
+      <Appbar walletAddress={walletAddress} setWalletAddress={setWalletAddress} />
       <Routes>
         <Route exact path="/search" element={<SearchPage />}></Route>
         <Route

@@ -29,6 +29,7 @@ export default function PublisherPage() {
   const [issue, setIssue] = useState("");
   const [id, setId] = useState(0);
   const [progress, setProgess] = useState(hash ? 100 : 0);
+  const [txnHash, setTxnHash] = useState("");
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -86,8 +87,9 @@ export default function PublisherPage() {
         alignItems={"center"}
         justifyContent={"center"}
         sx={{
-          maxWidth: "80vw",
-          width: "612px",
+          // maxWidth: "80vw",
+          // width: "612px",
+          width: "max-content",
           mx: "auto",
           mt: "8vh",
           mb: "8vh",
@@ -145,6 +147,7 @@ export default function PublisherPage() {
                 hash={hash}
                 setFile={setFile}
                 progress={progress}
+                setTxnHash={setTxnHash}
               />
             ) : null}
             {activeStep === 2 ? (
@@ -155,6 +158,7 @@ export default function PublisherPage() {
                 details={details}
                 issue={issue}
                 hash={hash}
+                txnHash={txnHash}
               />
             ) : null}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>

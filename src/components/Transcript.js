@@ -2,7 +2,7 @@ import { Button, Stack, Typography, Box } from "@mui/material";
 import { useRef } from "react";
 import { toJpeg } from "html-to-image";
 
-const Transcript = ({ file, name, details, hash, issue, id }) => {
+const Transcript = ({ file, name, details, hash, issue, id, txnHash }) => {
   const domEl = useRef(null);
 
   const handleDownloadImg = async () => {
@@ -23,7 +23,7 @@ const Transcript = ({ file, name, details, hash, issue, id }) => {
           backgroundColor: "#FEFEFE",
           width: "100%",
           height: "100%",
-          p: 1,
+          // p: 1,
         }}
       >
         <Typography variant="h5">Document transcript:</Typography>
@@ -40,8 +40,11 @@ const Transcript = ({ file, name, details, hash, issue, id }) => {
             <Typography fontSize={22}>Details: {details}</Typography>
             <Typography fontSize={22}>Issued: {issue}</Typography>
             <Typography fontSize={22}>Certificate Id: {id}</Typography>
-            <Typography variant="caption" fontSize={22}>
+            <Typography fontSize={22} >
               Hash: {hash}
+            </Typography>
+            <Typography variant="caption" fontSize={18} sx={{whiteSpace: "nowrap"}}>
+              Txn hash: {txnHash}
             </Typography>
           </Stack>
         </Stack>
