@@ -11,6 +11,9 @@ import SearchPage from "./pages/SearchPage";
 import AdminsPage from "./pages/AdminsPage";
 import PublisherPage from "./pages/PublisherPage";
 import OwnerPage from "./pages/OwnerPage";
+import Home from "./pages/Home";
+import Result from "./pages/Result";
+import ViewPage from "./pages/ViewPage";
 
 const OWNER = process.env.REACT_APP_OWNER_ADDR;
 const ADMINS = process.env.REACT_APP_ADMIN_ADDRS;
@@ -23,7 +26,10 @@ function App() {
     <div className="App">
       <Appbar walletAddress={walletAddress} setWalletAddress={setWalletAddress} />
       <Routes>
-        <Route exact path="/search" element={<SearchPage />}></Route>
+        <Route path="search" element={<SearchPage />} />
+        <Route exact path="view" element={<ViewPage />}>
+          <Route path=":id" element={<Result/>} />
+        </Route>
         <Route
           exact
           path="/publisher-dashboard"
@@ -79,7 +85,8 @@ function App() {
             )
           }
         ></Route>
-        <Route path="*" element={<Navigate to={"/search"} replace />}></Route>
+        <Route path="/" element={<Home/>} />
+        <Route path="*" element={<Navigate to={"/"} replace />}></Route>
       </Routes>
     </div>
   );

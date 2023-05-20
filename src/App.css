@@ -1,8 +1,7 @@
 .App {
   text-align: center;
-  background-color: #F3F2F2;
   width: 100%;
-  min-height: 100vh;
+  
 }
 
 .appbar {
@@ -20,5 +19,13 @@
 }
 
 body {
-  background-color: #F3F2F2;
+  background-color: #1E1E1E;
+  background-image: radial-gradient(gray 1px, transparent 0);
+  background-size: 30px 30px;
+  background-position: -10px 0px;
 }
+
+/* backgroundColor: "#1E1E1E",
+          backgroundImage: "radial-gradient(gray 1px, transparent 0)",
+          backgroundSize: "30px 30px",
+          backgroundPosition: "-10px 0px", */

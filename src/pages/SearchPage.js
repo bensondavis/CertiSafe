@@ -5,6 +5,7 @@ import {
   Button,
   Box,
   Divider,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
@@ -13,14 +14,16 @@ import ABI from "../contract/ABI.json";
 import BMF from "browser-md5-file";
 import CircularProgressWithLabel from "../components/Progress";
 import ViewDocument from "../components/ViewDocument";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchPage() {
   const [id, setId] = useState("");
   const [file, setFile] = useState(null);
   const [hash, setHash] = useState("");
   const [progress, setProgess] = useState(hash ? 100 : 0);
-  const [document, setDocument] = useState(null);
-  console.log({ document });
+  const navigate = useNavigate();
+
   const handleCalculateHash = () => {
     if (file === null) return;
 
@@ -37,30 +40,7 @@ export default function SearchPage() {
   };
 
   const handleSearch = () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(ADDRESS, ABI, provider);
-    const signer = provider.getSigner();
-    const daiWithSigner = contract.connect(signer);
-
-    if (id !== "") {
-      daiWithSigner
-        .searchById(parseInt(id))
-        .then((res) => {
-          setDocument(res);
-        })
-        .catch((err) => {
-          console.log({ err });
-        });
-    } else if (file !== null) {
-      daiWithSigner
-        .searchByHash(hash)
-        .then((res) => {
-          setDocument(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    navigate(`/view/${id ? id : hash}`);
   };
 
   useEffect(() => {
@@ -68,90 +48,123 @@ export default function SearchPage() {
   }, [file]);
 
   return (
-    <>
-      <Stack
-        alignItems={"center"}
-        justifyContent={"center"}
+    <Stack
+      sx={{
+        width: "100%",
+        minHeight: "100vh",
+      }}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <Box
         sx={{
-          maxWidth: "400px",
-          mx: "auto",
-          mt: "10vh",
-          backgroundColor: "#FEFEFE",
-          p: "5px",
-          // minHeight: "400px",
-          borderRadius: "10px",
+          display: "flex",
+          flexDirection: { xs: "column", sm: "column", md: "row" },
+          mt: 10
         }}
       >
-        <Typography variant="h4" sx={{ mt: 2, mb: 1 }}>
-          Search
-        </Typography>
-        <Box sx={{ mt: 2, width: "245px" }}>
-          <TextField
-            sx={{ width: "100%" }}
-            variant="outlined"
-            label="Id of the document"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          ></TextField>
-
-          <Divider sx={{ mt: 2 }}>or</Divider>
-
-          <Button
-            variant="outlined"
-            component="label"
-            sx={{ mt: 2, width: "100%" }}
-          >
-            Choose a file
-            <input
-              hidden
-              accept="image/*"
-              type="file"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-              }}
-            />
-          </Button>
-          <Typography variant="caption">{file?.name}</Typography>
-          {file ? <img src={URL.createObjectURL(file)} width={150} /> : null}
-          <br />
-          {progress > 0 ? (
-            <Stack
-              spacing={1}
-              direction={"row"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              sx={{ mt: 2, mb: 1 }}
-            >
-              <Typography variant="caption">Calculating hash: </Typography>
-              <CircularProgressWithLabel value={progress} />
-            </Stack>
-          ) : null}
-          {progress === 100 && (
-            <Typography variant="caption">hash: {hash}</Typography>
-          )}
-        </Box>
-        <Button
-          sx={{ minWidth: "200px", mt: 3, mb: 3 }}
-          variant="contained"
-          onClick={handleSearch}
+        <Box
+          sx={{
+            backgroundColor: "#7A63FF",
+            width: { xs: "80vw", sm: "70vw", md: "300px" },
+            p: 3,
+          }}
         >
-          Submit
-        </Button>
-      </Stack>
+          <Typography sx={{ color: "white", fontSize: 50, textAlign: "left" }}>
+            Search
+          </Typography>
+          <br />
+          <br />
+          <Typography
+            textAlign={"left"}
+            sx={{ color: "white" }}
+            variant="body1"
+          >
+            Discover the power of CertiBlock, the blockchain-based framework
+            that ensures the integrity and authenticity of your documents.
+            Easily verify certified documents, eliminate fraud, and gain trust
+            in an instant. Experience secure document certification like never
+            before.
+          </Typography>
+        </Box>
+        <Stack
+          sx={{
+            width: { xs: "80vw", sm: "70vw", md: "400px" },
+            minHeight: { xs: "300px", sm: "300px", md: "350px" },
+            p: 3,
+            backgroundColor: "white",
+          }}
+          alignItems={"center"}
+          justifyContent={"center"}
+          spacing={2}
+        >
+          <Box sx={{ width: "90%" }}>
+            <Typography variant="h6" sx={{ textAlign: "left" }}>
+              Enter Id of the document:
+            </Typography>
+            <TextField
+              label="Document Id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              sx={{ width: "100%", mt: 1 }}
+            ></TextField>
+          </Box>
 
-      {document ? (
-        <ViewDocument
-        id={parseInt(document[0])}
-          hash={document[1]}
-          issued={document[4]}
-          details={document[3]}
-          name={document[2]}
-          url={document[5]}
-          accepted={parseInt(document[6])}
-          rejected={parseInt(document[7])}
-          adminCount={parseInt(document[8])}
-        />
-      ) : null}
-    </>
+          <Box sx={{ width: "90%" }}>
+            <Divider sx={{ mt: 2 }}>or</Divider>
+          </Box>
+
+          <Box sx={{ width: "90%" }}>
+            <Typography variant="h6" sx={{ textAlign: "left" }}>
+              Upload your document:
+            </Typography>
+            <Stack justifyContent={"center"} direction={"row"} sx={{ mt: 1 }}>
+              <Button
+                variant="outlined"
+                component="label"
+                sx={{ width: "100%" }}
+              >
+                Choose a file
+                <input
+                  hidden
+                  accept="image/*"
+                  type="file"
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                  }}
+                />
+              </Button>
+              {file ? (
+                <IconButton
+                  onClick={() => {
+                    setFile(null);
+                    setProgess(0);
+                    setId("");
+                    setHash("");
+                  }}
+                >
+                  <RemoveCircleIcon />
+                </IconButton>
+              ) : null}
+            </Stack>
+
+            <Typography variant="caption">{file?.name}</Typography>
+            {progress > 0 ? (
+              <Stack
+                spacing={1}
+                direction={"row"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                sx={{ mt: 2, mb: 1 }}
+              >
+                <Typography variant="caption">Calculating hash: </Typography>
+                <CircularProgressWithLabel value={progress} />
+              </Stack>
+            ) : null}
+          </Box>
+          {id || hash ? <Button variant="contained" onClick={handleSearch} sx={{width: "100px"}}>Submit</Button> : null}
+        </Stack>
+      </Box>
+    </Stack>
   );
 }
