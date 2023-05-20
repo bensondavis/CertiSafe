@@ -35,6 +35,7 @@ export default function CenteredTabs() {
         position: "absolute",
         top: 0,
         left: 0,
+        
       }}
     >
       <Tabs

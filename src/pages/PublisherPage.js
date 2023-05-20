@@ -91,12 +91,12 @@ export default function PublisherPage() {
           // width: "612px",
           width: "max-content",
           mx: "auto",
-          mt: "8vh",
+          mt: "18vh",
           mb: "8vh",
           backgroundColor: "#FEFEFE",
           p: "5px",
           // maxHeight: "90vh",
-          borderRadius: "10px",
+          // borderRadius: "10px",
         }}
       >
         <Typography variant="h4">Upload Document</Typography>

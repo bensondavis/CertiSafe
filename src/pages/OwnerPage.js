@@ -12,7 +12,7 @@ export default function OwnerPage() {
         sx={{
           maxWidth: "80vw",
           mx: "auto",
-          mt: "8vh",
+          mt: "18vh",
           backgroundColor: "#FEFEFE",
           p: "5px",
           maxHeight: "700px",
