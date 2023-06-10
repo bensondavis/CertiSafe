@@ -8,12 +8,8 @@ import {
   IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import { ADDRESS } from "../Global";
-import ABI from "../contract/ABI.json";
 import BMF from "browser-md5-file";
 import CircularProgressWithLabel from "../components/Progress";
-import ViewDocument from "./ViewDocument";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useNavigate } from "react-router-dom";
 

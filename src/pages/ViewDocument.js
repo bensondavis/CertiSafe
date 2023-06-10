@@ -9,6 +9,7 @@ import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
 import CustomInfo from "../components/CustomInfo";
 import dayjs from "dayjs";
 import AcceptRejectBtn from "../components/AcceptRejectBtn";
+import ImageViewer from "react-simple-image-viewer";
 
 function createData(name, value) {
   return { name, value };
@@ -19,7 +20,12 @@ const ViewDocument = ({ validate }) => {
   const [rows, setRows] = useState(["", "", "", "", ""]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
   const { id } = useParams();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (id) {
@@ -63,6 +69,7 @@ const ViewDocument = ({ validate }) => {
             src={data[5]}
             width={{ xs: "100%", sm: "90%", md: "50%" }}
             alt="document"
+            onClick={() => setOpen(true)}
           />
           <Box
             sx={{
@@ -115,6 +122,14 @@ const ViewDocument = ({ validate }) => {
             {validate ? <AcceptRejectBtn id={id} /> : null}
           </Box>
         </Stack>
+      )}
+      {open && (
+        <ImageViewer
+          src={[data[5]]}
+          currentIndex={0}
+          closeOnClickOutside={true}
+          onClose={handleClose}
+        />
       )}
     </Box>
   );
