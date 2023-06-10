@@ -1,4 +1,6 @@
-import { Stack, TextField, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
+import CustomInput from "./CustomInput";
+import { useEffect } from "react";
 
 const DocInfo = ({
   name,
@@ -7,68 +9,45 @@ const DocInfo = ({
   setName,
   setDetails,
   setIssue,
+  setDisabled,
 }) => {
-
+  useEffect(() => {
+    if (name && details && issue) {
+      setDisabled(false);
+    }
+    if (!name || !details || !issue) {
+      setDisabled(true);
+    }
+  }, [name, details, issue]);
   return (
     <Stack
       spacing={3}
       alignItems={"center"}
       justifyContent={"center"}
       direction={"column"}
-      sx={{ mb: 4 }}
+      sx={{ mb: 2 }}
     >
-      <Stack
-        spacing={1}
-        direction={"column"}
-        alignItems={"flex-start"}
-        sx={{ mt: 5 }}
-      >
-        <Typography>Enter Name in the document</Typography>
-        <TextField
-          label="Name"
-          value={name}
-          sx={{ width: "350px" }}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        ></TextField>
-      </Stack>
-
-      {/* <Stack spacing={1} direction={"column"} alignItems={"flex-start"}>
-        <Typography>Enter Email of the document owner</Typography>
-        <TextField
-          label="Email"
-          value={email}
-          sx={{ width: "350px" }}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        ></TextField>
-      </Stack> */}
-
-      <Stack spacing={1} direction={"column"} alignItems={"flex-start"}>
-        <Typography>Enter details in the document</Typography>
-        <TextField
-          label="Details"
-          value={details}
-          sx={{ width: "350px" }}
-          onChange={(e) => {
-            setDetails(e.target.value);
-          }}
-        ></TextField>
-      </Stack>
-
-      <Stack spacing={1} direction={"column"} alignItems={"flex-start"}>
-        <Typography>Enter Issued date of the document</Typography>
-        <TextField
-          label="Issued Date: dd/mm/yyyy"
-          value={issue}
-          sx={{ width: "350px" }}
-          onChange={(e) => {
-            setIssue(e.target.value);
-          }}
-        ></TextField>
-      </Stack>
+      <CustomInput
+        isText={true}
+        title={"Enter Name in the document"}
+        label={"Name"}
+        value={name}
+        onChange={setName}
+      />
+      <CustomInput
+        isMultiLine={true}
+        title={"Enter details in the document"}
+        label={"Details"}
+        value={details}
+        onChange={setDetails}
+      />
+      <CustomInput
+        isDate={true}
+        title={"Enter Issued date of the document"}
+        label={"Date"}
+        value={issue}
+        onChange={setIssue}
+      />
     </Stack>
   );
 };

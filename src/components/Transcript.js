@@ -1,15 +1,18 @@
 import { Button, Stack, Typography, Box } from "@mui/material";
 import { useRef } from "react";
 import { toJpeg } from "html-to-image";
+import dayjs from "dayjs";
 
 const Transcript = ({ file, name, details, hash, issue, id, txnHash }) => {
   const domEl = useRef(null);
+  const issuedDate = issue ? String(dayjs(issue).$d).split(" ") : "";
+
 
   const handleDownloadImg = async () => {
     const dataUrl = await toJpeg(domEl.current);
 
     const link = document.createElement("a");
-    link.download = "html-to-img.jpeg";
+    link.download = "Receipt.jpeg";
     link.href = dataUrl;
     link.click();
   };
@@ -38,7 +41,7 @@ const Transcript = ({ file, name, details, hash, issue, id, txnHash }) => {
           <Stack alignItems={"flex-start"} sx={{ mt: 2 }}>
             <Typography fontSize={22}>Name: {name}</Typography>
             <Typography fontSize={22}>Details: {details}</Typography>
-            <Typography fontSize={22}>Issued: {issue}</Typography>
+            <Typography fontSize={22}>Issued: {`${issuedDate[1]} ${issuedDate[2]} ${issuedDate[3]}`}</Typography>
             <Typography fontSize={22}>Certificate Id: {id}</Typography>
             <Typography fontSize={22} >
               Hash: {hash}

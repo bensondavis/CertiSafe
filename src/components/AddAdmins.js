@@ -1,25 +1,12 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { ethers } from "ethers";
 import { useState } from "react";
-import { ADDRESS } from "../Global";
-import ABI from "../contract/ABI.json";
+import { addAdmin } from "../functions/ContractInteractions";
 
 const AddAdmins = () => {
   const [adminAddress, setAdminAddress] = useState("");
-  const [message, setMessage] = useState("");
 
-  const handleClick = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(ADDRESS, ABI, provider);
-    const signer = provider.getSigner();
-    const daiWithSigner = contract.connect(signer);
-    daiWithSigner.addAdmin(adminAddress).then((res) => {
-      setMessage(res.hash);
-      setAdminAddress("");
-    }).catch((err) => {
-      console.log({err});
-      setMessage(err.reason);
-    })
+  const handleClick = () => {
+    addAdmin(adminAddress, setAdminAddress);
   };
 
   return (
@@ -39,12 +26,6 @@ const AddAdmins = () => {
           }}
           sx={{ width: { xs: "90%", md: "80%" } }}
         ></TextField>
-
-        {message ? (
-          <Typography variant="caption" sx={{ whiteSpace: "nowrap" }}>
-            Txn hash: {message}
-          </Typography>
-        ) : null}
       </Stack>
 
       <Button variant="contained" sx={{ mt: 4 }} onClick={handleClick}>

@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   width: 100%;
-  
 }
 
 .appbar {
@@ -13,7 +12,7 @@
 }
 
 .sidebar {
-  width: 160px;
+  /* width: 160px; */
   height: calc(100vh - 50px);
   background-color: #FEFEFE;
 }
@@ -23,6 +22,8 @@ body {
   background-image: radial-gradient(gray 1px, transparent 0);
   background-size: 30px 30px;
   background-position: -10px 0px;
+  /* min-width: 400px; */
+  overflow-x: hidden;
 }
 
 /* backgroundColor: "#1E1E1E",

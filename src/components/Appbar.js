@@ -2,7 +2,7 @@ import { IconButton, Paper, Stack, Typography } from "@mui/material";
 import "@fontsource/montserrat/700.css";
 import MuiDrawer from "./Drawer";
 
-export default function Appbar({ walletAddress, setWalletAddress }) {
+export default function Appbar({ user, setUser }) {
   return (
     <Stack
       sx={{
@@ -18,8 +18,8 @@ export default function Appbar({ walletAddress, setWalletAddress }) {
       elevation={4}
     >
       <MuiDrawer
-        walletAddress={walletAddress}
-        setWalletAddress={setWalletAddress}
+        user={user}
+        setUser={setUser}
       />
       <Typography
         fontFamily={"Montserrat"}

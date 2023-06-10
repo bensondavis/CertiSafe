@@ -11,7 +11,7 @@ import Data from "../Data/DrawerData";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const MuiDrawer = ({ walletAddress, setWalletAddress }) => {
+const MuiDrawer = ({ user, setUser }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const MuiDrawer = ({ walletAddress, setWalletAddress }) => {
   };
 
   const handleLogout = () => {
-    setWalletAddress("");
+    setUser(0);
   };
 
   return (
@@ -50,7 +50,7 @@ const MuiDrawer = ({ walletAddress, setWalletAddress }) => {
                 </ListItemButton>
               </ListItem>
             ))}
-            {walletAddress ? (
+            {user > 0 ? (
               <>
                 <Divider />
                 <ListItem disablePadding>
